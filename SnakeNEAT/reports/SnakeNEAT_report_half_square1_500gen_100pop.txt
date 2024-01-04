@@ -1,0 +1,7 @@
+Best Fitness: 35
+Generation: 500
+Population Size: 100
+Vision Mode: half_square
+Vision Length: 1
+Direction Knowleadge: True
+Apple Position Knowleadge: True

@@ -1,0 +1,7 @@
+Best Fitness: 22
+Generation: 500
+Population Size: 100
+Vision Mode: whole_board
+Vision Length: 1
+Direction Knowleadge: True
+Apple Position Knowleadge: True
