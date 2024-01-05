@@ -1,4 +1,5 @@
-import Snake
+from snake_game import SnakeGame
+from snake import GAME_BOARD_SIZE
 import pygame
 import neat
 import os
@@ -44,7 +45,7 @@ def load_pickle(file_name:str, path:str=None) -> object:
         
     return object
 
-def square_around_snake_head(size:int, snake_game:Snake.SnakeGame) -> list:
+def square_around_snake_head(size:int, snake_game:SnakeGame) -> list:
     # snake head has a full square vision around it
     snake_head_position = (snake_game.snake.snake_body[0]["x"], snake_game.snake.snake_body[0]["y"])
     square = []
@@ -96,7 +97,7 @@ def square_around_snake_head(size:int, snake_game:Snake.SnakeGame) -> list:
                 
     return square        
 
-def half_square_around_snake_head(size:int, snake_game:Snake.SnakeGame) -> list:
+def half_square_around_snake_head(size:int, snake_game:SnakeGame) -> list:
     # snake head has a half square vision in front of it based on the direction it is going
     snake_head_position = (snake_game.snake.snake_body[0]["x"], snake_game.snake.snake_body[0]["y"])
     snake_head_direction = snake_game.snake.snake_body[0]["direction"]
@@ -220,7 +221,7 @@ def half_square_around_snake_head(size:int, snake_game:Snake.SnakeGame) -> list:
         
     return half_square
 
-def circle_around_snake_head(size:int, snake_game:Snake.SnakeGame) -> list:
+def circle_around_snake_head(size:int, snake_game:SnakeGame) -> list:
     # snake head has a full circular vision around it
     snake_head_position = (snake_game.snake.snake_body[0]["x"], snake_game.snake.snake_body[0]["y"])
     circle = []
@@ -273,7 +274,7 @@ def circle_around_snake_head(size:int, snake_game:Snake.SnakeGame) -> list:
 
     return circle
 
-def half_circle_around_snake_head(size:int, snake_game:Snake.SnakeGame) -> list:
+def half_circle_around_snake_head(size:int, snake_game:SnakeGame) -> list:
     # snake head has a half circle vision in front of it based on the direction it is going
     snake_head_position = (snake_game.snake.snake_body[0].x, snake_game.snake.snake_body[0].y)
     snake_head_direction = snake_game.snake.snake_body[0].direction
@@ -289,7 +290,7 @@ def half_circle_around_snake_head(size:int, snake_game:Snake.SnakeGame) -> list:
                         half_circle.append(-1)
                 half_circle.append(snake_game.game_board[snake_head_position[1] - y][snake_head_position[0]])    
                 for x in range(1, (size - y) + 1):
-                    if snake_head_position[0] + x < Snake.GAME_BOARD_SIZE:
+                    if snake_head_position[0] + x < GAME_BOARD_SIZE:
                         half_circle.append(snake_game.game_board[snake_head_position[1] - y][snake_head_position[0] + x])
                     else:
                         half_circle.append(-1)
@@ -303,16 +304,16 @@ def half_circle_around_snake_head(size:int, snake_game:Snake.SnakeGame) -> list:
             else:
                 half_circle.append(-1) 
         for x in range(1, size + 1):
-            if snake_head_position[0] + x < Snake.GAME_BOARD_SIZE:
+            if snake_head_position[0] + x < GAME_BOARD_SIZE:
                 half_circle.append(snake_game.game_board[snake_head_position[1]][snake_head_position[0] + x])
             else:
                 half_circle.append(-1)
                     
     elif snake_head_direction == "down":
         for y in reversed(range(1, size + 1)):
-            if snake_head_position[1] + y < Snake.GAME_BOARD_SIZE:
+            if snake_head_position[1] + y < GAME_BOARD_SIZE:
                 for x in reversed(range(1, (size - y) + 1)):
-                    if snake_head_position[0] + x < Snake.GAME_BOARD_SIZE:
+                    if snake_head_position[0] + x < GAME_BOARD_SIZE:
                         half_circle.append(snake_game.game_board[snake_head_position[1] + y][snake_head_position[0] + x])
                     else:
                         half_circle.append(-1)
@@ -327,7 +328,7 @@ def half_circle_around_snake_head(size:int, snake_game:Snake.SnakeGame) -> list:
                     half_circle.append(-1)
     
         for x in reversed(range(1, size + 1)):
-            if snake_head_position[0] + x < Snake.GAME_BOARD_SIZE:
+            if snake_head_position[0] + x < GAME_BOARD_SIZE:
                 half_circle.append(snake_game.game_board[snake_head_position[1]][snake_head_position[0] + x])
             else:
                 half_circle.append(-1) 
@@ -341,7 +342,7 @@ def half_circle_around_snake_head(size:int, snake_game:Snake.SnakeGame) -> list:
         for x in reversed(range(1, size + 1)):
             if snake_head_position[0] - x >= 0:
                 for y in reversed(range(1, (size - x) + 1)):
-                    if snake_head_position[1] + y < Snake.GAME_BOARD_SIZE:
+                    if snake_head_position[1] + y < GAME_BOARD_SIZE:
                         half_circle.append(snake_game.game_board[snake_head_position[1] + y][snake_head_position[0] - x])
                     else:
                         half_circle.append(-1)
@@ -356,7 +357,7 @@ def half_circle_around_snake_head(size:int, snake_game:Snake.SnakeGame) -> list:
                     half_circle.append(-1)
     
         for y in reversed(range(1, size + 1)):
-            if snake_head_position[1] + y < Snake.GAME_BOARD_SIZE:
+            if snake_head_position[1] + y < GAME_BOARD_SIZE:
                 half_circle.append(snake_game.game_board[snake_head_position[1] + y][snake_head_position[0]])
             else:
                 half_circle.append(-1) 
@@ -368,7 +369,7 @@ def half_circle_around_snake_head(size:int, snake_game:Snake.SnakeGame) -> list:
                 
     elif snake_head_direction == "right":
         for x in reversed(range(1, size + 1)):
-            if snake_head_position[0] + x < Snake.GAME_BOARD_SIZE:
+            if snake_head_position[0] + x < GAME_BOARD_SIZE:
                 for y in reversed(range(1, (size - x) + 1)):
                     if snake_head_position[1] - y >= 0:
                         half_circle.append(snake_game.game_board[snake_head_position[1] - y][snake_head_position[0] + x])
@@ -376,7 +377,7 @@ def half_circle_around_snake_head(size:int, snake_game:Snake.SnakeGame) -> list:
                         half_circle.append(-1)
                 half_circle.append(snake_game.game_board[snake_head_position[1]][snake_head_position[0] + x])    
                 for y in range(1, (size - x) + 1):
-                    if snake_head_position[1] + y < Snake.GAME_BOARD_SIZE:
+                    if snake_head_position[1] + y < GAME_BOARD_SIZE:
                         half_circle.append(snake_game.game_board[snake_head_position[1] + y][snake_head_position[0] + x])
                     else:
                         half_circle.append(-1)
@@ -390,14 +391,14 @@ def half_circle_around_snake_head(size:int, snake_game:Snake.SnakeGame) -> list:
             else:
                 half_circle.append(-1) 
         for y in range(1, size + 1):
-            if snake_head_position[1] + y < Snake.GAME_BOARD_SIZE:
+            if snake_head_position[1] + y < GAME_BOARD_SIZE:
                 half_circle.append(snake_game.game_board[snake_head_position[1] + y][snake_head_position[0]])
             else:
                 half_circle.append(-1)
         
     return half_circle
 
-def snake_head_direction(snake_game:Snake.SnakeGame) -> list:
+def snake_head_direction(snake_game:SnakeGame) -> list:
     # the snake head's direction, 1 is the direction it is going and -1 is not the direction it is going
     snake_head_direction = snake_game.snake.snake_body[0].direction
     inputs = []
@@ -425,7 +426,7 @@ def snake_head_direction(snake_game:Snake.SnakeGame) -> list:
     
     return inputs
     
-def apple_position_to_snake_head(snake_game:Snake.SnakeGame) -> list:
+def apple_position_to_snake_head(snake_game:SnakeGame) -> list:
     snake_head_position = (snake_game.snake.snake_body[0].x, snake_game.snake.snake_body[0].y)
     apple_position = (snake_game.apple.x, snake_game.apple.y)
     inputs = []
@@ -480,7 +481,7 @@ class SnakeGenome:
     def __init__(self):
        self.genome:neat.DefaultGenome = None
        self.network:neat.nn.FeedForwardNetwork = None
-       self.snake_game:Snake.SnakeGame = None
+       self.snake_game:SnakeGame = None
        self.apples_position_history:list[tuple[int,int]] = []
        self.timeout_timer:int = 0
 
@@ -521,10 +522,10 @@ class SnakeNEAT:
         total_population_size = len(self.population.population)
         # if there are replays, draw the loading screen
         if self.show_replays:
-            loading_screen = Snake.SnakeGame(show_window=True)
+            loading_screen = SnakeGame(show_window=True)
             self.draw_loading(loading_screen, total_population_size, 0)
         else:
-            loading_screen = Snake.SnakeGame(show_window=False)
+            loading_screen = SnakeGame(show_window=False)
             
         # set up all of the genomes, neural networks and birds
         for genome_id, genome in incoming_genomes:
@@ -532,7 +533,7 @@ class SnakeNEAT:
             genome.fitness = 0
             snake_genomes[-1].genome = genome
             snake_genomes[-1].network = neat.nn.FeedForwardNetwork.create(genome, config)
-            snake_genomes[-1].snake_game = Snake.SnakeGame(show_window=False)
+            snake_genomes[-1].snake_game = SnakeGame(show_window=False)
             snake_genomes[-1].snake_game.apple.new_position((loading_screen.apple.x, loading_screen.apple.y))
             snake_genomes[-1].apples_position_history.append((loading_screen.apple.x, loading_screen.apple.y))
         
@@ -613,7 +614,7 @@ class SnakeNEAT:
     
     def replay(self, genome:neat.DefaultGenome, config:neat.Config, apples_position_history:list[tuple[int, int]]=None, replay_speed=20) -> None:
         self.REPLAY_FRAMERATE = replay_speed
-        snake_game = Snake.SnakeGame()
+        snake_game = SnakeGame()
         network = neat.nn.FeedForwardNetwork.create(genome, config)
         fitness = 0
         timeout_timer = 0
@@ -664,7 +665,7 @@ class SnakeNEAT:
             snake_game.update_game_board()
             self.draw_window(snake_game, fitness)
     
-    def predict(self, network:neat.nn.FeedForwardNetwork, snake_game:Snake.SnakeGame) -> None:
+    def predict(self, network:neat.nn.FeedForwardNetwork, snake_game:SnakeGame) -> None:
         # based on the game board, the AI chooses either right, left, up or down
         outputs = network.activate(self.inputs(snake_game))
         best_output = (0, 0)
@@ -714,7 +715,7 @@ class SnakeNEAT:
                 elif best_output[0] == 2:
                     snake_game.snake.up()      
         
-    def inputs(self, snake_game:Snake.SnakeGame) -> tuple:
+    def inputs(self, snake_game:SnakeGame) -> tuple:
         # whole view of the game board; vision_mode="whole_board"
         if self.input_config[0] == "whole_board":
             inputs = flatten_list(snake_game.game_board)
@@ -744,7 +745,7 @@ class SnakeNEAT:
         
         return tuple(inputs)   
     
-    def draw_window(self, snake_game:Snake.SnakeGame, fitness_score:int) -> None:
+    def draw_window(self, snake_game:SnakeGame, fitness_score:int) -> None:
         snake_game.draw()
         gen_text = pygame.font.SysFont("comicsans", 32).render(f"Gen: {str(self.population.generation)}", 1, (255,255,255))
         snake_game.gui.window.blit(gen_text, (snake_game.gui.get_width() - gen_text.get_width(), 0))
@@ -754,7 +755,7 @@ class SnakeNEAT:
         snake_game.gui.window.blit(best_fitness_text, (snake_game.gui.get_width()/2 - best_fitness_text.get_width()/2, fitness_text.get_height()))
         pygame.display.update()
     
-    def draw_loading(self, snake_game:Snake.SnakeGame, total_population_size:int, remaining_population_size:int) -> None:
+    def draw_loading(self, snake_game:SnakeGame, total_population_size:int, remaining_population_size:int) -> None:
         self.draw_window(snake_game, 0)
         loading_text = pygame.font.SysFont("comicsans", 32).render(f"Loading... ({remaining_population_size}/{total_population_size})", 1, (255,255,255))
         snake_game.gui.window.blit(loading_text, (snake_game.gui.get_width()/2 - loading_text.get_width()/2, snake_game.gui.get_height()/2 - loading_text.get_height()/2))
@@ -823,7 +824,7 @@ class SnakeNEAT:
     
     def report(self) -> None:
         print(f"REPORT:")
-        print(f"Best Fitness: {self.best_fitness}\nAverage Fitness: {self.average_fitness}\nGeneration: {self.population.generation}\nPopulation Size: {len(self.population.population)}") 
+        print(f"Best Fitness: {self.best_fitness}\nGeneration: {self.population.generation}\nPopulation Size: {len(self.population.population)}") 
         print(f"Vision Mode: {self.input_config[0]}\nVision Length: {self.input_config[1]}\nDirection Knowleadge: {self.input_config[2]}\nApple Position Knowleadge: {self.input_config[3]}\n")
     
     def save_report(self, file_name:str=None, path:str=None) -> None:
@@ -843,7 +844,7 @@ class SnakeNEAT:
             n += 1
         
         with open(file_name, "w") as f:
-            f.write(f"Best Fitness: {self.best_fitness}\nAverage Fitness: {self.average_fitness}\nGeneration: {self.population.generation}\nPopulation Size: {len(self.population.population)}\n")
+            f.write(f"Best Fitness: {self.best_fitness}\nGeneration: {self.population.generation}\nPopulation Size: {len(self.population.population)}\n")
             f.write(f"Vision Mode: {self.input_config[0]}\nVision Length: {self.input_config[1]}\nDirection Knowleadge: {self.input_config[2]}\nApple Position Knowleadge: {self.input_config[3]}\n")
             f.close()
     
@@ -866,7 +867,6 @@ class SnakeNEAT:
         self.TRAINING_FRAMERATE = speed
     
     def quit(self) -> None:
-        #self.save_population()
         pygame.quit()
         quit()
     

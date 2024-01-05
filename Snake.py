@@ -1,8 +1,9 @@
-import SnakeGUI
 import pygame
-import os
 import random
-pygame.init
+import os
+from snake_gui import SnakeGUI
+
+pygame.init()
 pygame.font.init()
 
 GAME_BOARD_SIZE = 18
@@ -11,7 +12,7 @@ SNAKE_IMGS = [pygame.image.load(os.path.join("images", "snake_head.png")), pygam
               pygame.image.load(os.path.join("images", "snake_body_turn.png")), pygame.image.load(os.path.join("images", "snake_tail.png"))]
 APPLE_IMG = pygame.image.load(os.path.join("images", "apple.png"))
 
-class Snake:
+class SnakeObject:
     # setting up the different snake parts for easy access
     SNAKE_HEAD_IMG = {"right":SNAKE_IMGS[0], "left":pygame.transform.flip(SNAKE_IMGS[0], True, False), "up":pygame.transform.rotate(SNAKE_IMGS[0], 90), "down":pygame.transform.rotate(SNAKE_IMGS[0], -90)}
     SNAKE_BODY_STRAIGHT_IMG = {"right":SNAKE_IMGS[1], "left":SNAKE_IMGS[1], "up":pygame.transform.rotate(SNAKE_IMGS[1], 90), "down":pygame.transform.rotate(SNAKE_IMGS[1], 90)}
@@ -103,7 +104,7 @@ class Snake:
     def size(self) -> int:
         return len(self.snake_body)
     
-class Apple:
+class AppleObject:
     def __init__(self, position:tuple[int, int]=(0,0)) -> None:
         self.x = position[0]
         self.y = position[1]
@@ -119,7 +120,7 @@ class SnakeGame:
     
     def __init__(self, snake_starting_size:int=3, snake_starting_position:tuple[int,int]=(7,8), show_window=True) -> None:
         # initalize game board and file in the borders; -1 = wall or body, 0 = free space, 1 = head of snake, 2 = apple
-        self.game_board = [[0 for x in range(GAME_BOARD_SIZE)] for y in range(GAME_BOARD_SIZE)]
+        self.game_board = [[0 for _ in range(GAME_BOARD_SIZE)] for _ in range(GAME_BOARD_SIZE)]
         for i in range(GAME_BOARD_SIZE):
             self.game_board[i][0] = -1
             self.game_board[0][i] = -1
@@ -127,10 +128,10 @@ class SnakeGame:
             self.game_board[GAME_BOARD_SIZE - 1][i] = -1
         
         # setting up the snake for our game   
-        self.snake = Snake(snake_starting_size, snake_starting_position)
+        self.snake = SnakeObject(snake_starting_size, snake_starting_position)
         
         # making a new apple with a random position on the game board that isn't occupied
-        self.apple = Apple()
+        self.apple = AppleObject()
         self.new_apple()   
 
         self.update_game_board()
@@ -139,7 +140,7 @@ class SnakeGame:
         self.image = GAME_BOARD_IMG
         
         if show_window:
-            self.gui = SnakeGUI.SnakeGUI((self.image.get_width(), self.image.get_height() + 48))
+            self.gui = SnakeGUI((self.image.get_width(), self.image.get_height() + 48))
         else:
             self.gui = None
             
@@ -296,13 +297,4 @@ class SnakeGame:
                         return
                     elif event.key == pygame.K_DOWN:
                         self.snake.down()  
-                        return                        
-          
-if __name__ == "__main__":
-    while True:
-        snake_game = SnakeGame()
-        snake_game.start_screen()
-        if snake_game.start(framerate=60):
-            snake_game.win_screen()
-        else:
-            snake_game.lose_screen()
+                        return
