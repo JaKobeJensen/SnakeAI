@@ -1,4 +1,4 @@
-import SnakeGUIV1
+import SnakeGUI
 import pygame
 import os
 import random
@@ -139,7 +139,7 @@ class SnakeGame:
         self.image = GAME_BOARD_IMG
         
         if show_window:
-            self.gui = SnakeGUIV1.SnakeGUI((self.image.get_width(), self.image.get_height() + 48))
+            self.gui = SnakeGUI.SnakeGUI((self.image.get_width(), self.image.get_height() + 48))
         else:
             self.gui = None
             

@@ -1,11 +1,11 @@
 import pygame
-import SnakeV1
+
 
 class SnakeGUI:
     def __init__(self, window_size:tuple[int,int]=(100,100)) -> None:
         self.window:pygame.Surface = pygame.display.set_mode(window_size)
     
-    def draw_snake_game(self, snake_game:SnakeV1.SnakeGame, position:tuple[int,int]=(0,0)) -> None:                    
+    def draw_snake_game(self, snake_game, position:tuple[int,int]=(0,0)) -> None:                    
         self.draw_surface(snake_game.image, position)
         
         for snake_part in snake_game.snake.snake_body:
