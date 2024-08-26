@@ -1,5 +1,4 @@
 import pygame
-# from snake import SnakeGame
 
 class SnakeGUI:
     def __init__(self, window_size:tuple[int,int]=(100,100)) -> None:
