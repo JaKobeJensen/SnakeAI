@@ -1,5 +1,6 @@
 import os
 import pickle
+import sys
 from resource import resource_path
 
 import neat
@@ -839,7 +840,7 @@ class SnakeNEAT:
             for event in pygame.event.get():
                 if event.type == pygame.QUIT:
                     self.quit()
-                    return 1
+                    sys.exit()
 
             # going through each snake game and letting the AI move
             for idx, snake_genome in enumerate(snake_genomes):
@@ -953,7 +954,7 @@ class SnakeNEAT:
             for event in pygame.event.get():
                 if event.type == pygame.QUIT:
                     self.quit()
-                    return 1
+                    sys.exit()
 
             # based on the game board, the AI chooses either right, left, up or down
             self.predict(network, snake_game)
